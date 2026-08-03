@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, get_list_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Todo
 
 def todo_list(request):
@@ -17,16 +17,18 @@ def todo_list(request):
         if 'edit_task' in request.POST:
             task_id = request.POST.get('task_id')
             new_title = request.POST.get('new_title')
-            todo = get_list_or_404(Todo, id = task_id)
+            todo = get_object_or_404(Todo, id = task_id)
             todo.title = new_title
             todo.save()
             return redirect('todo_list')
 
+
         if 'delete_task' in request.POST:
             task_id = request.POST.get('task_id')
-            todo = Todo.objects.get(id=task_id)
+            todo = get_object_or_404(id=task_id)
             todo.delete()
             return redirect('todo_list')
+
 
         if 'clear_all' in request.POST:
             Todo.objects.all().delete()
