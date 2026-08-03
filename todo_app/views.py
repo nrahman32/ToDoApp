@@ -25,7 +25,7 @@ def todo_list(request):
 
         if 'delete_task' in request.POST:
             task_id = request.POST.get('task_id')
-            todo = get_object_or_404(id=task_id)
+            todo = get_object_or_404(Todo, id=task_id)
             todo.delete()
             return redirect('todo_list')
 
