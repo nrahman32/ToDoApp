@@ -22,13 +22,11 @@ def todo_list(request):
             todo.save()
             return redirect('todo_list')
 
-
         if 'delete_task' in request.POST:
             task_id = request.POST.get('task_id')
-            todo = get_list_or_404(Todo, id = task_id)
+            todo = Todo.objects.get(id=task_id)
             todo.delete()
             return redirect('todo_list')
-
 
         if 'clear_all' in request.POST:
             Todo.objects.all().delete()
